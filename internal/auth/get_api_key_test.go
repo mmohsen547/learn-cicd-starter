@@ -1,17 +1,17 @@
 package auth
 
 import (
-	"testing"
-	"net/http"
 	"errors"
+	"net/http"
+	"testing"
 )
 
 func TestGetAPIKey(t *testing.T) {
 
 	tests := map[string]struct {
-		headers http.Header
-		want string
-		wantErr bool
+		headers     http.Header
+		want        string
+		wantErr     bool
 		expectedErr error
 	}{
 		"valid API key": {
@@ -22,10 +22,9 @@ func TestGetAPIKey(t *testing.T) {
 		},
 
 		"missing authorization header": {
-			headers: http.Header{},
-			wantErr: true,
+			headers:     http.Header{},
+			wantErr:     true,
 			expectedErr: ErrNoAuthHeaderIncluded,
-		
 		},
 
 		"wrong auth scheme": {
@@ -47,23 +46,21 @@ func TestGetAPIKey(t *testing.T) {
 
 				if tt.expectedErr != nil && !errors.Is(err, tt.expectedErr) {
 					t.Fatalf("expected error %v, got %v", tt.expectedErr, err)
-				}		
+				}
 
 				return
-			}	
+			}
 
 			if err != nil {
 				t.Fatalf("Unexpected error: %v", err)
 			}
 
 			if got != tt.want {
-	
+
 				t.Errorf("got %q, want %q", got, tt.want)
 			}
 
-		})	
+		})
 	}
 
 }
-
-
